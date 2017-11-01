@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.sccomponents.gauges.ScArcGauge;
+
 import static android.content.Context.SENSOR_SERVICE;
 
 /**
@@ -30,6 +32,8 @@ public class SensorListDetailFragment extends Fragment implements SensorEventLis
     private Sensor sensor = null;
     private SensorManager sensorManager = null;
     private TextView temperatureView = null;
+    private ScArcGauge gauge;
+
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -69,7 +73,7 @@ public class SensorListDetailFragment extends Fragment implements SensorEventLis
             if (sensor.getType() == Sensor.TYPE_AMBIENT_TEMPERATURE) {
                 rootView = inflater.inflate(R.layout.temperature_sensor, container, false);
                 temperatureView = rootView.findViewById(R.id.temperature);
-                temperatureView.setText("" + sensor.getPower());
+                gauge = rootView.findViewById(R.id.gauge);
             } else {
                 rootView = inflater.inflate(R.layout.dummy_sensor, container, false);
                 ((TextView) rootView.findViewById(R.id.dummy_type)).setText(sensor.getStringType());
@@ -84,7 +88,10 @@ public class SensorListDetailFragment extends Fragment implements SensorEventLis
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        temperatureView.setText("" + sensorEvent.values[0]);
+        if (temperatureView != null) {
+            temperatureView.setText("" + sensorEvent.values[0]);
+            gauge.setX(sensorEvent.values[0]);
+        }
     }
 
     @Override
