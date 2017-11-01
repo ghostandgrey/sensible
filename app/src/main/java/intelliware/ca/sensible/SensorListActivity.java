@@ -2,6 +2,8 @@ package intelliware.ca.sensible;
 
 import android.content.Context;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -14,9 +16,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
-import intelliware.ca.sensible.dummy.DummyContent;
+import java.util.Map;
 
 /**
  * An activity representing a list of SensorSummaries. This activity
@@ -33,6 +36,10 @@ public class SensorListActivity extends AppCompatActivity {
      * device.
      */
     private boolean mTwoPane;
+
+    public static List<Sensor> SENSORS = new ArrayList<>();
+
+    public static Map<String, Sensor> SENSOR_MAP = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,22 +73,25 @@ public class SensorListActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, DummyContent.ITEMS, mTwoPane));
+        SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        SENSORS = sensorManager.getSensorList(Sensor.TYPE_ALL);
+        SENSORS.stream().forEach(sensor -> SENSOR_MAP.put(sensor.getStringType(), sensor));
+        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, SENSORS, mTwoPane));
     }
 
     public static class SimpleItemRecyclerViewAdapter
             extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
 
         private final SensorListActivity mParentActivity;
-        private final List<DummyContent.DummyItem> mValues;
+        private final List<Sensor> mValues;
         private final boolean mTwoPane;
         private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DummyContent.DummyItem item = (DummyContent.DummyItem) view.getTag();
+                Sensor sensor = (Sensor) view.getTag();
                 if (mTwoPane) {
                     Bundle arguments = new Bundle();
-                    arguments.putString(SensorListDetailFragment.ARG_ITEM_ID, item.id);
+                    arguments.putString(SensorListDetailFragment.ARG_ITEM_ID, sensor.getStringType());
                     SensorListDetailFragment fragment = new SensorListDetailFragment();
                     fragment.setArguments(arguments);
                     mParentActivity.getSupportFragmentManager().beginTransaction()
@@ -90,7 +100,7 @@ public class SensorListActivity extends AppCompatActivity {
                 } else {
                     Context context = view.getContext();
                     Intent intent = new Intent(context, SensorListDetailActivity.class);
-                    intent.putExtra(SensorListDetailFragment.ARG_ITEM_ID, item.id);
+                    intent.putExtra(SensorListDetailFragment.ARG_ITEM_ID, sensor.getStringType());
 
                     context.startActivity(intent);
                 }
@@ -98,7 +108,7 @@ public class SensorListActivity extends AppCompatActivity {
         };
 
         SimpleItemRecyclerViewAdapter(SensorListActivity parent,
-                                      List<DummyContent.DummyItem> items,
+                                      List<Sensor> items,
                                       boolean twoPane) {
             mValues = items;
             mParentActivity = parent;
@@ -114,8 +124,8 @@ public class SensorListActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
-            holder.mIdView.setText(mValues.get(position).id);
-            holder.mContentView.setText(mValues.get(position).content);
+            holder.mIdView.setText(mValues.get(position).getStringType());
+            holder.mContentView.setText(mValues.get(position).getName());
 
             holder.itemView.setTag(mValues.get(position));
             holder.itemView.setOnClickListener(mOnClickListener);
