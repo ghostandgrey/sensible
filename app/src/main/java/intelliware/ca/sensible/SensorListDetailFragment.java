@@ -53,11 +53,20 @@ public class SensorListDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.sensorlist_detail, container, false);
+        View rootView;
 
         // Show the dummy content as text in a TextView.
         if (sensor != null) {
-            ((TextView) rootView.findViewById(R.id.sensorlist_detail)).setText(sensor.toString());
+            if (sensor.getType() == Sensor.TYPE_AMBIENT_TEMPERATURE) {
+                rootView = inflater.inflate(R.layout.temperature_sensor, container, false);
+                ((TextView) rootView.findViewById(R.id.temperature)).setText("" + sensor.getPower());
+            } else {
+                rootView = inflater.inflate(R.layout.dummy_sensor, container, false);
+                ((TextView) rootView.findViewById(R.id.dummy_type)).setText(sensor.getStringType());
+                ((TextView) rootView.findViewById(R.id.dummy_vendor)).setText(sensor.getVendor());
+            }
+        } else {
+            rootView = inflater.inflate(R.layout.dummy_sensor, container, false);
         }
 
         return rootView;
