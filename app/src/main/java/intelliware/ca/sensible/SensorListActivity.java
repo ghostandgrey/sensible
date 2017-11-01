@@ -26,7 +26,7 @@ import intelliware.ca.sensible.dummy.DummyContent;
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
-public class SensorListListActivity extends AppCompatActivity {
+public class SensorListActivity extends AppCompatActivity {
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -72,7 +72,7 @@ public class SensorListListActivity extends AppCompatActivity {
     public static class SimpleItemRecyclerViewAdapter
             extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
 
-        private final SensorListListActivity mParentActivity;
+        private final SensorListActivity mParentActivity;
         private final List<DummyContent.DummyItem> mValues;
         private final boolean mTwoPane;
         private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
@@ -97,7 +97,7 @@ public class SensorListListActivity extends AppCompatActivity {
             }
         };
 
-        SimpleItemRecyclerViewAdapter(SensorListListActivity parent,
+        SimpleItemRecyclerViewAdapter(SensorListActivity parent,
                                       List<DummyContent.DummyItem> items,
                                       boolean twoPane) {
             mValues = items;

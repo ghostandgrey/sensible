@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".SensorListListActivity"
+            android:name=".SensorListActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -22,11 +22,11 @@
         <activity
             android:name=".SensorListDetailActivity"
             android:label="@string/title_sensorlist_detail"
-            android:parentActivityName=".SensorListListActivity"
+            android:parentActivityName=".SensorListActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="intelliware.ca.sensible.SensorListListActivity" />
+                android:value="intelliware.ca.sensible.SensorListActivity" />
         </activity>
     </application>
 
