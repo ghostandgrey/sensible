@@ -1,8 +1,6 @@
 package intelliware.ca.sensible;
 
 import android.content.Intent;
-import android.hardware.Sensor;
-import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,8 +10,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
-import intelliware.ca.sensible.sensor.GenericListener;
-
 /**
  * An activity representing a single SensorList detail screen. This
  * activity is only used on narrow width devices. On tablet-size devices,
@@ -21,8 +17,6 @@ import intelliware.ca.sensible.sensor.GenericListener;
  * in a {@link SensorListActivity}.
  */
 public class SensorListDetailActivity extends AppCompatActivity {
-
-    private GenericListener listener = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,21 +61,6 @@ public class SensorListDetailActivity extends AppCompatActivity {
                     .add(R.id.sensorlist_detail_container, fragment)
                     .commit();
         }
-
-
-        Sensor sensor = SensorListActivity.SENSOR_MAP.get(sensorId);
-        SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        listener = new GenericListener();
-        sensorManager.registerListener(listener, sensor, SensorManager.SENSOR_DELAY_NORMAL);
-    }
-
-    @Override
-    protected void onPause() {
-        SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        if (listener != null) {
-            sensorManager.unregisterListener(listener);
-        }
-        super.onPause();
     }
 
     @Override
