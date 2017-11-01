@@ -31,15 +31,13 @@ import java.util.Map;
  */
 public class SensorListActivity extends AppCompatActivity {
 
+    public static List<Sensor> SENSORS = new ArrayList<>();
+    public static Map<String, Sensor> SENSOR_MAP = new HashMap<>();
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
      */
     private boolean mTwoPane;
-
-    public static List<Sensor> SENSORS = new ArrayList<>();
-
-    public static Map<String, Sensor> SENSOR_MAP = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,8 +72,10 @@ public class SensorListActivity extends AppCompatActivity {
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        SENSORS = sensorManager.getSensorList(Sensor.TYPE_ALL);
-        SENSORS.stream().forEach(sensor -> SENSOR_MAP.put(sensor.getStringType(), sensor));
+        sensorManager.getSensorList(Sensor.TYPE_ALL).stream().forEach(sensor -> SENSOR_MAP.put(sensor.getStringType(), sensor));
+        List<Sensor> sensors = new ArrayList<>(SENSOR_MAP.values());
+        sensors.sort((a, b) -> a.getName().compareTo(b.getName()));
+        SENSORS = sensors;
         recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, SENSORS, mTwoPane));
     }
 
