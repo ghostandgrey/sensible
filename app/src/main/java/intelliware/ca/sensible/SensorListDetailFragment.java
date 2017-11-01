@@ -15,6 +15,9 @@ import android.widget.TextView;
 
 import com.sccomponents.gauges.ScArcGauge;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static android.content.Context.SENSOR_SERVICE;
 
 /**
@@ -33,6 +36,12 @@ public class SensorListDetailFragment extends Fragment implements SensorEventLis
     private SensorManager sensorManager = null;
     private TextView temperatureView = null;
     private ScArcGauge gauge;
+    private List<TextView> values = new ArrayList<>();
+    private TextView value0;
+    private TextView value1;
+    private TextView value2;
+    private TextView value3;
+    private TextView value4;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -76,8 +85,11 @@ public class SensorListDetailFragment extends Fragment implements SensorEventLis
                 gauge = rootView.findViewById(R.id.gauge);
             } else {
                 rootView = inflater.inflate(R.layout.dummy_sensor, container, false);
-                ((TextView) rootView.findViewById(R.id.dummy_type)).setText(sensor.getStringType());
-                ((TextView) rootView.findViewById(R.id.dummy_vendor)).setText(sensor.getVendor());
+                values.add(rootView.findViewById(R.id.value0_value));
+                values.add(rootView.findViewById(R.id.value1_value));
+                values.add(rootView.findViewById(R.id.value2_value));
+                values.add(rootView.findViewById(R.id.value3_value));
+                values.add(rootView.findViewById(R.id.value4_value));
             }
         } else {
             rootView = inflater.inflate(R.layout.dummy_sensor, container, false);
@@ -88,9 +100,18 @@ public class SensorListDetailFragment extends Fragment implements SensorEventLis
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
+        float[] newValues = sensorEvent.values;
         if (temperatureView != null) {
-            temperatureView.setText("" + sensorEvent.values[0]);
-            gauge.setX(sensorEvent.values[0]);
+            temperatureView.setText("" + newValues[0]);
+            gauge.setX(newValues[0]);
+        } else {
+            for (int i = 0; i < newValues.length; i++) {
+                if (i < this.values.size()) {
+                    this.values.get(i).setText("" + newValues[i]);
+                } else {
+                    System.out.println(String.format("Value index exceeds max: %s", i));
+                }
+            }
         }
     }
 
