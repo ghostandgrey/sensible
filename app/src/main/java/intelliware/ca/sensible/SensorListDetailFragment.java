@@ -13,7 +13,7 @@ import intelliware.ca.sensible.dummy.DummyContent;
 
 /**
  * A fragment representing a single SensorList detail screen.
- * This fragment is either contained in a {@link SensorListListActivity}
+ * This fragment is either contained in a {@link SensorListActivity}
  * in two-pane mode (on tablets) or a {@link SensorListDetailActivity}
  * on handsets.
  */
