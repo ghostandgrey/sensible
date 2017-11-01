@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.sccomponents.gauges.ScArcGauge;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class SensorListDetailFragment extends Fragment implements SensorEventLis
     private SensorManager sensorManager = null;
     private TextView temperatureView = null;
     private ScArcGauge gauge;
-    private List<TextView> values = new ArrayList<>();
+    private List<TextView> sensorValues = new ArrayList<>();
     private TextView value0;
     private TextView value1;
     private TextView value2;
@@ -85,11 +86,14 @@ public class SensorListDetailFragment extends Fragment implements SensorEventLis
                 gauge = rootView.findViewById(R.id.gauge);
             } else {
                 rootView = inflater.inflate(R.layout.dummy_sensor, container, false);
-                values.add(rootView.findViewById(R.id.value0_value));
-                values.add(rootView.findViewById(R.id.value1_value));
-                values.add(rootView.findViewById(R.id.value2_value));
-                values.add(rootView.findViewById(R.id.value3_value));
-                values.add(rootView.findViewById(R.id.value4_value));
+                sensorValues.add(rootView.findViewById(R.id.value0_value));
+                sensorValues.add(rootView.findViewById(R.id.value1_value));
+                sensorValues.add(rootView.findViewById(R.id.value2_value));
+                sensorValues.add(rootView.findViewById(R.id.value3_value));
+                sensorValues.add(rootView.findViewById(R.id.value4_value));
+                for (TextView valueView : sensorValues) {
+                    valueView.setText("");
+                }
             }
         } else {
             rootView = inflater.inflate(R.layout.dummy_sensor, container, false);
@@ -105,12 +109,15 @@ public class SensorListDetailFragment extends Fragment implements SensorEventLis
             temperatureView.setText("" + newValues[0]);
             gauge.setX(newValues[0]);
         } else {
-            for (int i = 0; i < newValues.length; i++) {
-                if (i < this.values.size()) {
-                    this.values.get(i).setText("" + newValues[i]);
-                } else {
-                    System.out.println(String.format("Value index exceeds max: %s", i));
-                }
+            for (TextView textView : sensorValues) {
+                textView.setText("");
+            }
+            int i = 0;
+            for (; i < sensorValues.size() && i < newValues.length; i++) {
+                this.sensorValues.get(i).setText(new DecimalFormat("0.000").format(newValues[i]));
+            }
+            for (; i < newValues.length; i++) {
+                System.out.println(String.format("Value index exceeds max: %s", i));
             }
         }
     }
