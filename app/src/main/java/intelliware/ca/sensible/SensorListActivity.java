@@ -3,6 +3,7 @@ package intelliware.ca.sensible;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
+import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -33,6 +34,7 @@ public class SensorListActivity extends AppCompatActivity {
 
     public static List<Sensor> SENSORS = new ArrayList<>();
     public static Map<String, Sensor> SENSOR_MAP = new HashMap<>();
+    public static Map<Sensor, SensorEventListener> sensorListenerMap = new HashMap<>();
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
@@ -77,6 +79,7 @@ public class SensorListActivity extends AppCompatActivity {
         sensors.sort((a, b) -> a.getName().compareTo(b.getName()));
         SENSORS = sensors;
         recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, SENSORS, mTwoPane));
+
     }
 
     public static class SimpleItemRecyclerViewAdapter
