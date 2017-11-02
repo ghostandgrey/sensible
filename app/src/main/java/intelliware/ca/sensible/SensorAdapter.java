@@ -10,4 +10,6 @@ public interface SensorAdapter {
     View createView(LayoutInflater inflater, ViewGroup container, Resources resources);
 
     void onSensorChanged(SensorEvent sensorEvent);
+
+    void onDestroy();
 }

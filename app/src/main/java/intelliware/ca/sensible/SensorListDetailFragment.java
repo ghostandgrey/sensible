@@ -68,11 +68,12 @@ public class SensorListDetailFragment extends Fragment implements SensorEventLis
         if (sensor != null) {
             if (sensor.getType() == Sensor.TYPE_AMBIENT_TEMPERATURE) {
                 sensorAdapter = new TemperatureSensorAdapter();
-                rootView = sensorAdapter.createView(inflater, container, this.getResources());
+            } else if (sensor.getType() == Sensor.TYPE_PROXIMITY) {
+                sensorAdapter = new ProximitySensorAdapter();
             } else {
-                sensorAdapter = new DummySensorAdapter(sensor);
-                rootView = sensorAdapter.createView(inflater, container, this.getResources());
+                sensorAdapter = new DummySensorAdapter();
             }
+            rootView = sensorAdapter.createView(inflater, container, this.getResources());
         } else {
             rootView = inflater.inflate(R.layout.dummy_sensor, container, false);
         }
@@ -96,6 +97,9 @@ public class SensorListDetailFragment extends Fragment implements SensorEventLis
     public void onPause() {
         if (sensorManager != null) {
             sensorManager.unregisterListener(this);
+            if (sensorAdapter != null) {
+                sensorAdapter.onDestroy();
+            }
         }
         super.onPause();
     }
