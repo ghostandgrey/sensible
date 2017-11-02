@@ -2,13 +2,12 @@ package intelliware.ca.sensible;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -49,15 +48,6 @@ public class SensorListActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         if (findViewById(R.id.sensorlist_detail_container) != null) {
             // The detail container view will be present only in the
@@ -129,6 +119,16 @@ public class SensorListActivity extends AppCompatActivity {
         public void onBindViewHolder(final ViewHolder holder, int position) {
             holder.mIdView.setText(mValues.get(position).getStringType());
             holder.mContentView.setText(mValues.get(position).getName());
+
+            Sensor sensor = mValues.get(position);
+            int sensorType = sensor.getType();
+            if (sensorType == Sensor.TYPE_AMBIENT_TEMPERATURE ||
+                    sensorType == Sensor.TYPE_PROXIMITY ||
+                    sensorType == Sensor.TYPE_LIGHT) {
+                holder.itemView.setBackgroundColor(Color.CYAN);
+            } else {
+                holder.itemView.setBackgroundColor(Color.WHITE);
+            }
 
             holder.itemView.setTag(mValues.get(position));
             holder.itemView.setOnClickListener(mOnClickListener);
