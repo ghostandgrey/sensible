@@ -34,6 +34,7 @@ public class DummySensorAdapter implements SensorAdapter {
             label.setPadding(0, 0, 30, 0);
             tableRow.addView(label);
             TextView sensorValue = new TextView(view.getContext());
+            sensorValue.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
             sensorValues.add(sensorValue);
             tableRow.addView(sensorValue);
             table.addView(tableRow);
