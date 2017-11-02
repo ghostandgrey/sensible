@@ -21,8 +21,8 @@ import com.sccomponents.gauges.ScPointer;
 import com.sccomponents.gauges.ScWriter;
 
 public class TemperatureSensorAdapter implements SensorAdapter {
-    private static final int START_RANGE = -20;
-    private static final int END_RANGE = 30;
+    private static final int START_RANGE = -12;
+    private static final int END_RANGE = 28;
     private static final int NUMBER_OF_TOKENS = 9;
     private static final int BREAK_RANGE = (END_RANGE - START_RANGE) / NUMBER_OF_TOKENS;
 
@@ -110,7 +110,7 @@ public class TemperatureSensorAdapter implements SensorAdapter {
                 if (ScGauge.PROGRESS_IDENTIFIER.equals(info.source.getTag())) {
                     // Scale and adjust the offset
                     info.scale = new PointF(1.1f, 1.1f);
-                    info.offset = new PointF(-28, -28);
+                    info.offset = new PointF(-65, -65);
 
                     // Adjust the color
 //                    int color = base.getGradientColor(gauge.getHighValue(), 100);
