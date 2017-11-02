@@ -71,7 +71,7 @@ public class SensorListDetailFragment extends Fragment implements SensorEventLis
                 rootView = sensorAdapter.createView(inflater, container, this.getResources());
             } else {
                 sensorAdapter = new DummySensorAdapter();
-                rootView = inflater.inflate(R.layout.dummy_sensor, container, false);
+                rootView = sensorAdapter.createView(inflater, container, this.getResources());
             }
         } else {
             rootView = inflater.inflate(R.layout.dummy_sensor, container, false);

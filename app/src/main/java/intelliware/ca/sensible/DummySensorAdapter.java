@@ -14,11 +14,6 @@ import java.util.List;
 public class DummySensorAdapter implements SensorAdapter {
     private View view = null;
     private List<TextView> sensorValues = new ArrayList<>();
-    private TextView value0;
-    private TextView value1;
-    private TextView value2;
-    private TextView value3;
-    private TextView value4;
 
     public DummySensorAdapter() {
     }
