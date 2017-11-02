@@ -70,6 +70,8 @@ public class SensorListDetailFragment extends Fragment implements SensorEventLis
                 sensorAdapter = new TemperatureSensorAdapter();
             } else if (sensor.getType() == Sensor.TYPE_PROXIMITY) {
                 sensorAdapter = new ProximitySensorAdapter();
+            } else if (sensor.getType() == Sensor.TYPE_LIGHT) {
+                sensorAdapter = new LightSensorAdapter();
             } else {
                 sensorAdapter = new DummySensorAdapter(sensor);
             }
