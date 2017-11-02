@@ -21,6 +21,11 @@ import com.sccomponents.gauges.ScPointer;
 import com.sccomponents.gauges.ScWriter;
 
 public class TemperatureSensorAdapter implements SensorAdapter {
+    private static final int START_RANGE = -20;
+    private static final int END_RANGE = 30;
+    private static final int NUMBER_OF_TOKENS = 9;
+    private static final int BREAK_RANGE = (END_RANGE - START_RANGE) / NUMBER_OF_TOKENS;
+
     private View view = null;
 
     public TemperatureSensorAdapter() {
@@ -39,8 +44,10 @@ public class TemperatureSensorAdapter implements SensorAdapter {
             return;
         }
         float[] newValues = sensorEvent.values;
-        view.<TextView>findViewById(R.id.temperature).setText("" + sensorEvent.values[0]);
-        view.<TextView>findViewById(R.id.temperature_counter).setText(sensorEvent.values[0] + "°");
+        float value = sensorEvent.values[0];
+        view.<TextView>findViewById(R.id.temperature).setText("" + value);
+        view.<TextView>findViewById(R.id.temperature_counter).setText(value + "°");
+        view.<ScArcGauge>findViewById(R.id.temperature_gauge).setHighValue(value, START_RANGE, END_RANGE);
     }
 
     private void setUpView(View view, Resources resources) {
@@ -55,8 +62,9 @@ public class TemperatureSensorAdapter implements SensorAdapter {
         final Bitmap indicator = BitmapFactory.decodeResource(resources, R.drawable.indicator);
 
         // Set the values.
-        gauge.setHighValue(14, -20, 30);
-        gauge.setPathTouchThreshold(40);
+        gauge.setHighValue(0, START_RANGE, END_RANGE);
+//        gauge.setPathTouchThreshold(40);
+        gauge.setRecognizePathTouch(false);
 
         // Set colors of the base
         int[] colours = {
@@ -71,8 +79,8 @@ public class TemperatureSensorAdapter implements SensorAdapter {
         gauge.setStrokeColorsMode(ScFeature.ColorsMode.SOLID);
 
         // Writer
-        String[] tokens = new String[9];
-        for (int index = 0; index < 9; index++) {
+        String[] tokens = new String[NUMBER_OF_TOKENS];
+        for (int index = 0; index < NUMBER_OF_TOKENS; index++) {
             tokens[index] = Integer.toString(index * 5 - 10);
         }
         gauge.setTextTokens(tokens);
@@ -84,7 +92,7 @@ public class TemperatureSensorAdapter implements SensorAdapter {
             @Override
             public void onValueChange(float lowValue, float highValue) {
                 // Write the value
-                highValue = ScGauge.percentageToValue(highValue, -20, 30);
+                highValue = ScGauge.percentageToValue(highValue, START_RANGE, END_RANGE);
                 float round = (Math.round(highValue * 10.0f)) / 10.0f;
                 counter.setText(Float.toString(round) + "°");
             }
