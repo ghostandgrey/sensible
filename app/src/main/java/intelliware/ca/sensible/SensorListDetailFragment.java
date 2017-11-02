@@ -71,7 +71,7 @@ public class SensorListDetailFragment extends Fragment implements SensorEventLis
             } else if (sensor.getType() == Sensor.TYPE_PROXIMITY) {
                 sensorAdapter = new ProximitySensorAdapter();
             } else {
-                sensorAdapter = new DummySensorAdapter();
+                sensorAdapter = new DummySensorAdapter(sensor);
             }
             rootView = sensorAdapter.createView(inflater, container, this.getResources());
         } else {
