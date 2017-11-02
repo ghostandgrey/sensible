@@ -5,6 +5,8 @@ import android.hardware.SensorEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
@@ -21,13 +23,17 @@ public class DummySensorAdapter implements SensorAdapter {
     @Override
     public View createView(LayoutInflater inflater, ViewGroup container, Resources resources) {
         view = inflater.inflate(R.layout.dummy_sensor, container, false);
-        sensorValues.add(view.findViewById(R.id.value0_value));
-        sensorValues.add(view.findViewById(R.id.value1_value));
-        sensorValues.add(view.findViewById(R.id.value2_value));
-        sensorValues.add(view.findViewById(R.id.value3_value));
-        sensorValues.add(view.findViewById(R.id.value4_value));
-        for (TextView valueView : sensorValues) {
-            valueView.setText("");
+        TableLayout table = view.findViewById(R.id.value_table);
+        for (int i = 0; i < 10; i++) {
+            TableRow tableRow = new TableRow(view.getContext());
+            TextView label = new TextView(view.getContext());
+            label.setText(i + ":");
+            tableRow.addView(label);
+            TextView sensorValue = new TextView(view.getContext());
+            sensorValue.setText("FOO");
+            sensorValues.add(sensorValue);
+            tableRow.addView(sensorValue);
+            table.addView(tableRow);
         }
         return view;
     }

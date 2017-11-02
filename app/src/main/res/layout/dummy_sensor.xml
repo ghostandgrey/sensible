@@ -6,100 +6,11 @@
     android:orientation="vertical">
 
     <TableLayout
+        android:id="@+id/value_table"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="15dp">
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/value0-label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingRight="15dp"
-                android:text="0:"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/value0-value"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="viewEnd" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/value1-label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1:"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/value1-value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAlignment="viewEnd" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/value2-label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2:"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/value2-value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAlignment="viewEnd" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/value3-label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="3:"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/value3-value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAlignment="viewEnd" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/value4-label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="4:"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/value4-value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAlignment="viewEnd" />
-        </TableRow>
     </TableLayout>
 
 </LinearLayout>
