@@ -46,8 +46,13 @@ public class TemperatureSensorAdapter implements SensorAdapter {
         float[] newValues = sensorEvent.values;
         float value = sensorEvent.values[0];
         view.<TextView>findViewById(R.id.temperature).setText("" + value);
-        view.<TextView>findViewById(R.id.temperature_counter).setText(value + "°");
+        view.<TextView>findViewById(R.id.temperature_counter).setText(value + "°C");
         view.<ScArcGauge>findViewById(R.id.temperature_gauge).setHighValue(value, START_RANGE, END_RANGE);
+    }
+
+    @Override
+    public void onDestroy() {
+
     }
 
     private void setUpView(View view, Resources resources) {

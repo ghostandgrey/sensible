@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:sc="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/proximityLabel"
+            android:layout_width="158dp"
+            android:layout_height="wrap_content"
+            android:text="Proximity"
+            tools:text="Proximity" />
+
+        <TextView
+            android:id="@+id/proximity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        android:background="#ECECEA"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <com.sccomponents.gauges.ScLinearGauge xmlns:sc="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/proximityGauge"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingBottom="10dp"
+            android:paddingLeft="50dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            sc:notches="8"
+            sc:notchesColor="#313131"
+            sc:orientation="vertical"
+            sc:progressColors="#3589F6"
+            sc:progressSize="6dp"
+            sc:strokeSize="0dp"
+            sc:textAlign="left"
+            sc:textPosition="outside"
+            sc:textTokens="0|5|10"
+            sc:textUnbend="true" />
+
+    </LinearLayout>
+</LinearLayout>

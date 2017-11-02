@@ -61,4 +61,9 @@ public class DummySensorAdapter implements SensorAdapter {
             }
         }
     }
+
+    @Override
+    public void onDestroy() {
+
+    }
 }
