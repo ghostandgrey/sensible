@@ -125,7 +125,7 @@ public class SensorListActivity extends AppCompatActivity {
             if (sensorType == Sensor.TYPE_AMBIENT_TEMPERATURE ||
                     sensorType == Sensor.TYPE_PROXIMITY ||
                     sensorType == Sensor.TYPE_LIGHT) {
-                holder.itemView.setBackgroundColor(Color.CYAN);
+                holder.itemView.setBackgroundColor(Color.argb(255, 150, 200, 250));
             } else {
                 holder.itemView.setBackgroundColor(Color.WHITE);
             }
