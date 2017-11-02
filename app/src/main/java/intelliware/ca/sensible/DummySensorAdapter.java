@@ -22,10 +22,11 @@ public class DummySensorAdapter implements SensorAdapter {
     public static final String MILLI_AMPS = " mA";
     public static final String METRES_PER_SECOND_SQUARED = " m/s^2";
     public static final String RADS_PER_SECOND = " rad/s";
-    public static final String SI_LUX = "SI lux";
+    public static final String SI_LUX = " SI lux";
     public static final String MILLIBAR = " hPa";
     public static final String CM = " cm";
-    public static final String DEGREES_CELCIUS = "°C";
+    public static final String DEGREES_CELSIUS = " °C";
+    public static final int MAX_SENSOR_VALUES = 14;
     private View view = null;
     private Sensor sensor;
     private List<TextView> sensorValues = new ArrayList<>();
@@ -45,7 +46,7 @@ public class DummySensorAdapter implements SensorAdapter {
 
     private void createValuesTable() {
         TableLayout table = view.findViewById(R.id.value_table);
-        for (int rowIndex = 0; rowIndex < 10; rowIndex++) {
+        for (int rowIndex = 0; rowIndex < MAX_SENSOR_VALUES; rowIndex++) {
             TableRow tableRow = new TableRow(view.getContext());
             tableRow.setVisibility(View.INVISIBLE);
 
@@ -73,9 +74,7 @@ public class DummySensorAdapter implements SensorAdapter {
     private String getRowLabel(int sensorType, int rowIndex) {
         switch (sensorType) {
             case Sensor.TYPE_ACCELEROMETER:
-            case Sensor.TYPE_ACCELEROMETER_UNCALIBRATED:
             case Sensor.TYPE_GYROSCOPE:
-            case Sensor.TYPE_GYROSCOPE_UNCALIBRATED:
             case Sensor.TYPE_MAGNETIC_FIELD:
                 switch (rowIndex) {
                     case 0:
@@ -84,6 +83,36 @@ public class DummySensorAdapter implements SensorAdapter {
                         return "y";
                     case 2:
                         return "z";
+                    default:
+                        return "" + rowIndex;
+                }
+            case Sensor.TYPE_ACCELEROMETER_UNCALIBRATED:
+            case Sensor.TYPE_GYROSCOPE_UNCALIBRATED:
+            case Sensor.TYPE_MAGNETIC_FIELD_UNCALIBRATED:
+                switch (rowIndex) {
+                    case 0:
+                        return "x";
+                    case 1:
+                        return "y";
+                    case 2:
+                        return "z";
+                    case 3:
+                        return "x bias";
+                    case 4:
+                        return "y bias";
+                    case 5:
+                        return "z bias";
+                    default:
+                        return "" + rowIndex;
+                }
+            case Sensor.TYPE_ORIENTATION:
+                switch (rowIndex) {
+                    case 0:
+                        return "azimuth";
+                    case 1:
+                        return "pitch";
+                    case 2:
+                        return "roll";
                     default:
                         return "" + rowIndex;
                 }
@@ -170,6 +199,7 @@ public class DummySensorAdapter implements SensorAdapter {
             case Sensor.TYPE_MAGNETIC_FIELD_UNCALIBRATED:
                 return MICRO_TESLA;
             case Sensor.TYPE_GYROSCOPE:
+            case Sensor.TYPE_GYROSCOPE_UNCALIBRATED:
                 return RADS_PER_SECOND;
             case Sensor.TYPE_LIGHT:
                 return SI_LUX;
@@ -178,7 +208,7 @@ public class DummySensorAdapter implements SensorAdapter {
             case Sensor.TYPE_PROXIMITY:
                 return CM;
             case Sensor.TYPE_AMBIENT_TEMPERATURE:
-                return DEGREES_CELCIUS;
+                return DEGREES_CELSIUS;
             default:
                 return "";
         }
