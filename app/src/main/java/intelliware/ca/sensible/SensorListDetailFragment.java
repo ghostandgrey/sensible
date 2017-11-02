@@ -70,7 +70,7 @@ public class SensorListDetailFragment extends Fragment implements SensorEventLis
                 sensorAdapter = new TemperatureSensorAdapter();
                 rootView = sensorAdapter.createView(inflater, container, this.getResources());
             } else {
-                sensorAdapter = new DummySensorAdapter();
+                sensorAdapter = new DummySensorAdapter(sensor);
                 rootView = sensorAdapter.createView(inflater, container, this.getResources());
             }
         } else {
