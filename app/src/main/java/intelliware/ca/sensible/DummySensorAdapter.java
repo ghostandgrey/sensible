@@ -1,6 +1,7 @@
 package intelliware.ca.sensible;
 
 import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.hardware.SensorEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import java.util.List;
 public class DummySensorAdapter implements SensorAdapter {
     private View view = null;
     private List<TextView> sensorValues = new ArrayList<>();
+    private List<TableRow> tableRows = new ArrayList<>();
 
     public DummySensorAdapter() {
     }
@@ -28,12 +30,14 @@ public class DummySensorAdapter implements SensorAdapter {
             TableRow tableRow = new TableRow(view.getContext());
             TextView label = new TextView(view.getContext());
             label.setText(i + ":");
+            label.setTypeface(Typeface.DEFAULT_BOLD);
+            label.setPadding(0, 0, 30, 0);
             tableRow.addView(label);
             TextView sensorValue = new TextView(view.getContext());
-            sensorValue.setText("FOO");
             sensorValues.add(sensorValue);
             tableRow.addView(sensorValue);
             table.addView(tableRow);
+            tableRows.add(tableRow);
         }
         return view;
     }
@@ -44,15 +48,16 @@ public class DummySensorAdapter implements SensorAdapter {
             return;
         }
         float[] newValues = sensorEvent.values;
-        for (TextView textView : sensorValues) {
-            textView.setText("");
-        }
-        int i = 0;
-        for (; i < sensorValues.size() && i < newValues.length; i++) {
-            this.sensorValues.get(i).setText(new DecimalFormat("0.000").format(newValues[i]));
-        }
-        for (; i < newValues.length; i++) {
-            System.out.println(String.format("Value index exceeds max: %s", i));
+        for (int i = 0; i < sensorValues.size(); i++) {
+            TextView sensorValueField = this.sensorValues.get(i);
+            TableRow tableRow = tableRows.get(i);
+            if (i < newValues.length) {
+                float newValue = newValues[i];
+                tableRow.setVisibility(View.VISIBLE);
+                sensorValueField.setText(new DecimalFormat("0.000").format(newValue));
+            } else {
+                tableRow.setVisibility(View.INVISIBLE);
+            }
         }
     }
 }
